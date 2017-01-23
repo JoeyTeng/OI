@@ -31,6 +31,7 @@ int main(){
         } else if (height > height_right){ // Second case. Reset second level; Reset extension
             height_right = height;
             length += length_second_level + length_extend + 1; // Important also. Include this new mountain
+            max_length = std::max(max_length, length); // Update here
             length_extend = 0;
         } else if (height == height_right){ // Third case. Reset second level
             max_length_second_level = std::max(length_second_level, length_extend + 1);
@@ -41,7 +42,7 @@ int main(){
         }
     }
 
-    max_length = std::max(std::max(max_length, length), max_length_second_level); // Important: Update the result if none of the cases above are fitted. E.g. The rightest mountain is not the highest.
+    max_length = std::max(max_length, max_length_second_level);
     if (N == 1){ // Possible Trick
         max_length = 0;
     }
