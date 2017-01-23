@@ -24,7 +24,7 @@ int main(){
             height_left = height;
             height_right = 0;
             // Total = | Merged | + | Sum of (not merged yet) | + | Extension |
-            max_length = std::max(length + length_second_level + length_extend + 1, max_length); // Important! +1 here to include the mountain at the right side! Do not +1 for all the cases if the rightest mountain is lower (in case that the mountain ends)
+            max_length = std::max(std::max(max_length, length + length_second_level + length_extend + 1), max_length_second_level); // Important! +1 here to include the mountain at the right side! Do not +1 for all the cases if the rightest mountain is lower (in case that the mountain ends)
             length = 0;
             length_second_level = 0;
             length_extend = 0;
@@ -33,6 +33,7 @@ int main(){
             length += length_second_level + length_extend + 1; // Important also. Include this new mountain
             max_length = std::max(max_length, length); // Update here
             length_extend = 0;
+            length_second_level = 0;
         } else if (height == height_right){ // Third case. Reset second level
             max_length_second_level = std::max(length_second_level, length_extend + 1);
             length_second_level += length_extend + 1;
