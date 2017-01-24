@@ -2,8 +2,26 @@
 
 #include<bits/stdc++.h>
 
+template<typename T>
+    int scan(T begin, T end);
+
 int main(){
     int N = 0;
+
+    std::cin >> N;
+
+    std::istream_iterator<int> int_cin(std::cin);
+    std::istream_iterator<int> int_end;
+    std::vector<int> h(int_cin, int_end);
+
+    std::cout << std::max(scan(h.begin(), h.end()), scan(h.rbegin(), h.rend())) << std::endl; // Do it in both direction. See testcase self 4
+
+    return 0;
+}
+
+template<typename T>
+    int scan(T begin, T end){
+
     int max_length = 0;
     int max_length_second_level = 0;
     int length = 0; // Merged length till now
@@ -12,10 +30,8 @@ int main(){
     int height_left = 0; // First High
     int height_right = 0; //Second High
 
-    std::cin >> N;
-    for (int i = 0; i < N; ++i){
-        int height;
-        std::cin >> height;
+    for (auto it = begin; it != end; ++it){
+        int height = *it;
 
         if (height >= height_left){ // First case. Reset all
             // Wrong. Need to be modified.
@@ -44,12 +60,7 @@ int main(){
     }
 
     max_length = std::max(max_length, max_length_second_level);
-    if (N == 1){ // Possible Trick
-        max_length = 0;
-    }
 
-    std::cout << max_length << std::endl;
-
-    return 0;
+    return max_length;
 }
 
