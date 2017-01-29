@@ -3,7 +3,7 @@
 #include<iostream>
 #include<string>
 
-int main(){
+int main() {
     int S = 0;
     int N = 0;
 
@@ -11,21 +11,19 @@ int main(){
 
     int count = S;
 
-    for (int i = 0; i < N; ++i){
+    for (int i = 0; i < N; ++i) {
         std::string tmp;
         std::getline(std::cin, tmp);
-        if (tmp == "USE"){
+        if (tmp == "USE") {
             --count;
+        } else if (tmp == "WASH") {
+            count = S;  // reset
         }
-        else if (tmp == "WASH"){
-            count = S; // reset
-        }
-        if (count < 0){
+        if (count < 0) {
             std::cout << "DIRTY" << std::endl;
 
-            return 0; // halt
+            return 0;  // halt
         }
-//        std::cout << tmp << ' ' << count << std::endl;
     }
 
     std::cout << "CLEAN" << std::endl;
