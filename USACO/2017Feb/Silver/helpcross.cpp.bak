@@ -1,0 +1,78 @@
+// helpcross
+
+#define TASK std::string("helpcross")
+#include<bits/stdc++.h>
+
+struct Cow {
+    Cow (int A, int B) {
+        this -> A = A;
+        this -> B = B;
+    }
+    friend int operator<(const Cow& left, const Cow& right);
+    
+    int A;
+    int B;
+};
+
+int operator<(const Cow& left, const Cow& right) {
+    return (left.B == right.B) ? (left.A > right.A) : (left.B < right.B);
+}
+
+std::ifstream fin(TASK + ".in");
+std::ofstream fout(TASK + ".out");
+
+int main() {
+    int C = 0;
+    int N = 0;
+    std::list<int> T;
+    std::list<Cow> cow;
+
+    fin >> C >> N;
+    for (int i = 0; i < C; ++i) {
+        int tmp = 0;
+        fin >> tmp;
+        T.push_back(tmp);
+    }
+    for (int i = 0; i < N; ++i) {
+        int A = 0;
+        int B = 0;
+        fin >> A >> B;
+        cow.push_back(Cow(A, B));
+    }
+    T.sort();
+    cow.sort();
+
+    int counting = 0;
+    auto i = cow.begin();
+    while (i != cow.end() && !T.empty()) {
+        if (T.front() >= i -> A && T.front() <= i -> B) {
+            T.pop_front();
+            auto tmp = i;
+            ++i;
+            cow.erase(tmp);
+            ++counting;
+            continue;
+        } else {
+            auto j = i;
+            while (j != cow.end()) {
+                if (T.front() >= j -> A && T.front() <= j -> B) {
+                    T.pop_front();
+                    cow.erase(j);
+                    ++counting;
+                    break;
+                }
+                if (T.front() > j -> B) {
+                    T.pop_front();
+                    break;
+                }
+                ++j;
+            }
+            i = j;
+        }
+        ++i;
+    }
+
+    fout << counting << std::endl;
+
+    return 0;
+}
