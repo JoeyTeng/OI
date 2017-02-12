@@ -17,7 +17,8 @@ int valid(int a, int b) {
 void dfs(int upp, int low, int depth) {
     // std::cout << upp << ' ' << low << ' ' << depth << std::endl;
     ans = std::max(ans, depth);
-    if (upp >= N - 1 || low >= N - 1) {
+    if (upp >= N - 1 || low >= N - 1
+     || N - std::max(upp, low) <= (ans - depth)) {
         return;
     }
 
