@@ -6,11 +6,12 @@
 std::ifstream fin(TASK + ".in");
 std::ofstream fout(TASK + ".out");
 
-const int DIRECTION = 16;
+const int DIRECTION = 20;
 const int INC[DIRECTION][2] = {{0, 3}, {1, 2}, {2, 1},
                                {3, 0}, {2, -1}, {1, -2},
                                {0, -3}, {-1, -2}, {-2, -1},
-                               {-3, 0}, {-2, 1}, {-1, 2}};
+                               {-3, 0}, {-2, 1}, {-1, 2},
+                               {0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
 int N = 0;
 int T = 0;
