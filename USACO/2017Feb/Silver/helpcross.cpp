@@ -54,31 +54,14 @@ int main() {
         i.B = std::min(C, r);
     }
     std::sort(cow.begin(), cow.end());
-    /*
-    for (auto i : cow) {
-        std::cout << i.A << " " << i.B << "  " << T[i.A] << ' ' << T[i.B] << std::endl;
-    }
-    */
 
     int lower = cow.at(0).A;
     int counting = 0;
     for (auto i = cow.begin(); i != cow.end(); ++i) {
-        /*
-        for (auto i : cow) {
-            std::cout << i.A << " ";
-        }
-        std::cout << std::endl;
-        for (auto i : cow) {
-            std::cout << i.B << " ";
-        }
-        std::cout << std::endl;
-        std::cout << std::endl;
-        */
 
         if (lower > i -> B || i -> B < i -> A) {
             continue;
         }
-        // std::cout << counting << " l " << lower << " A " << i -> A << " B " << i -> B << std::endl;
         auto min_it = i;
         auto min = i -> B;
         for (auto j = i + 1; j != cow.end() && j -> A <= lower; ++j) {
@@ -88,13 +71,10 @@ int main() {
             }
         }
         std::swap(*i, *min_it);
-        // std::cout << std::distance(cow.begin(), i + 1) << ' '
-        //           << std::distance(cow.begin(), std::upper_bound(i, cow.end(), Cow(lower, -1))) << std::endl;
         ++counting;
         lower = std::max(lower, i -> A) + 1;
     }
 
-    // std::cout << " test " << (Cow(4, 4) < Cow(4, -1)) << std::endl;
     fout << counting << std::endl;
 
     return 0;

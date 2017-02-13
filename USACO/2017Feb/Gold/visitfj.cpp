@@ -38,7 +38,6 @@ void spfa(int pos) {
     std::queue<int> Q;
     Q.push(pos);
 
-    // std::ostream_iterator<int64_t> int_cout(std::cout, " ");
     for (; !Q.empty();) {
         int pos = Q.front();
         Q.pop();
@@ -54,13 +53,6 @@ void spfa(int pos) {
                 }
             }
         }
-        /*
-        std::cout << pos << " " << dist.at(pos) << std::endl;
-        for (int i = 0; i < N; ++i) {
-            std::copy(dist.begin() + i * N, dist.begin() + (i + 1) * N, int_cout);
-            std::cout << std::endl;
-        }
-        */
     }
 }
 

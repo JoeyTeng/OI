@@ -33,14 +33,10 @@ int main() {
         }
     }
 
-    // std::ostream_iterator<int> int_cout(std::cout, " ");
     for (auto i : edges) {
-        // std::cout << i.first << ' ' << i.second << std::endl;
         for (int j = i.second - 1; j >= 0; --j) {
             dp[i.second] = std::max(dp[i.second], dp[j] + 1);
         }
-        // std::copy(dp.begin(), dp.end(), int_cout);
-        // std::cout << std::endl;
     }
     int ans = 0;
     for (auto i : dp) {
