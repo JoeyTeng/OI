@@ -3,9 +3,10 @@
 #include<bits/stdc++.h>
 
 struct Data {
-    Data (int a, int number) {
+    Data (int a, int number, int stacks) {
         this -> a = a;
         this -> number = number;
+        this -> stacks = stacks;
     }
 
     operator int() const {
@@ -14,6 +15,7 @@ struct Data {
 
     int a;
     int number;
+    int stacks;
 };
 
 int main() {
@@ -25,7 +27,7 @@ int main() {
     for (int i = 0; i < N; ++i) {
         int tmp;
         std::cin >> tmp;
-        Q.push_back(Data(tmp, i));
+        Q.push_back(Data(tmp, i, 1));
         a.push_back(tmp);
     }
     std::make_heap(Q.begin(), Q.end());
