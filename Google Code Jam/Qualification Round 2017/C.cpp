@@ -16,8 +16,8 @@ int main() {
         int64_t rem = K - pre;
         // a = n(x + 1) - m
         int64_t n = std::pow(2, level);
-        int64_t x = (N - 1) / std::pow(2, level);
         int64_t m = N - pre;
+        int64_t x = m / n;
         int64_t a = n * (x + 1) - m;
 
         int64_t ans = 0;
