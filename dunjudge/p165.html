@@ -1,0 +1,27 @@
+<p>In a faraway warring country, there are <i>N</i> generals from different factions engaged in numerous battles. 
+Each faction has a power from 1 to <i>N</i>, such that a faction with higher power always defeats a faction with 
+lower power. Indeed, after a faction is defeated by another, all its members are absorbed into the winning 
+faction. The power of a faction is the maximum of the powers of all its members.</p>
+<p>Initially, all generals are in individual factions. You are given the details of <i>M</i> battles between two generals. However, since generals seem to be a very closely-knit bunch, the full strength of the faction will aid in every battle any of its members undertakes. Given the details of these battles, we wish to find out the victorious faction in each battle</p>
+<h2>Input</h2>
+<p>The first line of input consists of two integers <i>N</i> and <i>M</i> (1 &le; <i>N</i>, <i>M</i> &le; 100,000).</p>
+<p>The next <i>N</i> lines of input each contains one integer <i>P<sub>i</sub></i>, representing the power level of the <i>i</i>-th faction. No two factions have the same power level.</p>
+<p>The next <i>M</i> lines contain two integers <i>a</i> and <i>b</i> each, indicating that generals <i>a</i> and <i>b</i> have started a battle, which their factions will soon join</p>
+<h2>Output</h2>
+<p>For each battle, print out one integer, indicating the faction which has won the battle. If two generals from the same faction fight, it is only considered an internal misunderstanding, and one should print out -1 instead.</p>
+<h2>Sample Input 1</h2>
+<pre>5 4
+1
+2
+3
+4
+5
+1 5
+1 2
+1 2
+3 4</pre>
+<h2>Sample Output 1</h2>
+<pre>5
+5
+-1
+4</pre>
