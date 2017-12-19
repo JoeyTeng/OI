@@ -37,18 +37,33 @@ int main() {
         int e = 0;
         cin >> b >> e;
         E.push_back({{ b, e }, i + N }); // Note! position of b&e has been
-
-        // swapped
-        if (b == 0) {
-            zero_queue.push(i);
-            ans[i] = 2;
-        }
+                                         // swapped
     }
     auto Bessie = B;
     auto Elsie  = E;
 
     std::sort(B.begin(), B.end());
     std::sort(E.begin(), E.end());
+
+    for (auto& i:Elsie) {
+        if (i.first.first == 0) {
+            auto pos =
+                std::upper_bound(B.begin(),
+                                 B.end(),
+                                 e - D,
+                                 [](const int& lhs,
+                                    const std::pair<std::pair<int, int>,
+                                                    int>& rhs) -> bool {
+                return lhs < rhs.first.first;
+            });
+            --pos;
+
+            while (pos >= B.begin() && (pos->first).first >= e - D) {
+                ans[pos->second] = 1;
+                --pos;
+            }
+        }
+    }
 
     while (!zero_queue.empty()) {
         std::queue<int> queue;
