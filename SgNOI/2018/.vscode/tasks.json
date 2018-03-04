@@ -1,0 +1,23 @@
+/**
+ * @Author: Joey Teng
+ * @Email:  joey.teng.dev@gmail.com
+ * @Filename: tasks.json
+ * @Last modified by:   Joey Teng
+ * @Last modified time: 03-Mar-2018
+ */
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "g++",
+            "type": "shell",
+            "command": "g++-7 -g -O2 snail.cpp",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
