@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html><head>
+<title>Contest Results</title>
+<META HTTP-EQUIV="EXPIRES" CONTENT="0">
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+</head>
+<body>
+(Analysis by Nathan Pinsker)
+<p>This problem can be reframed as a shortest-path problem. We consider each pie to
+be a node, and a directed edge between nodes <span class='math'>$A$</span> and <span class='math'>$B$</span> to exist if Bessie can
+gift pie <span class='math'>$B$</span> to Elsie after receiving pie <span class='math'>$A$</span> (or likewise for Elsie to Bessie).
+Under this formulation, we are given <span class='math'>$2N$</span> &quot;starting nodes&quot; and must determine,
+for each such node, the shortest path to a valid &quot;ending node&quot;.
+<p>We cannot simply use all-pairs shortest paths to solve this problem, as such
+algorithms are too slow for <span class='math'>$N \leq 10^5$</span>. However, we can take advantage of the
+fact that all paths have weight <span class='math'>$1$</span>, and perform the search using a BFS from
+multiple source nodes. This can be done simply by adding all source nodes to the
+queue at the beginning of the algorithm.
+<p>Normally, this algorithm would take <span class='math'>$O(N)$</span>, but we also need to efficiently
+find, for various given <span class='math'>$k$</span>, the set of nodes that have tastiness value between
+<span class='math'>$k$</span> and <span class='math'>$k + D$</span>. This can be done using binary search after sorting both
+Bessie&apos;s and Elsie&apos;s list of pies by how tasty they consider them to be. This
+makes our overall running time <span class='math'>$O(N \lg N)$</span>, which is still plenty fast enough
+to receive full credit.
+<p>Here&apos;s Dhruv&apos;s solution. He uses C++&apos;s <span class='math'>$\texttt{multiset}$</span> to perform binary
+searches:
+<p><pre class='prettyprint'>
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;set&gt;
+using namespace std;
+#define MAXN 100000
+#define INF 1000000000
+ 
+int N,D;
+int A[2*MAXN];
+int B[2*MAXN];
+int dist[2*MAXN];
+ 
+struct cmpA
+{
+	bool operator()(int a,int b) const
+	{
+		return B[a]&lt;B[b];
+	}
+};
+ 
+struct cmpB
+{
+	bool operator()(int a,int b) const
+	{
+		return A[a]&lt;A[b];
+	}
+};
+ 
+multiset&lt;int,cmpA&gt; sA;
+multiset&lt;int,cmpB&gt; sB;
+ 
+int que[2*MAXN];
+int cur,len;
+ 
+int main()
+{
+	cin &gt;&gt; N &gt;&gt; D;
+	for(int i=0;i&lt;2*N;i++)
+	{
+		cin &gt;&gt; A[i] &gt;&gt; B[i];
+		A[i] = -A[i], B[i] = -B[i];
+		dist[i] = -1;
+	}
+	for(int i=0;i&lt;N;i++)
+	{
+		if(B[i]==0)
+			que[len++] = i, dist[i] = 1;
+		else
+			sA.insert(i);
+		if(A[N+i]==0)
+			que[len++] = N+i, dist[N+i] = 1;
+		else
+			sB.insert(N+i);
+	}
+	multiset&lt;int,cmpA&gt;::iterator itA;
+	multiset&lt;int,cmpB&gt;::iterator itB;
+	while(cur &lt; len)
+	{
+		int i = que[cur];
+		if(i &lt; N)
+		{
+			while(1)
+			{
+				itB = sB.lower_bound(i);
+				if(itB == sB.end() || A[*itB] &gt; A[i]+D)
+					break;
+				dist[*itB] = dist[i] + 1;
+				que[len++] = *itB;
+				sB.erase(itB);
+			}
+		}
+		else
+		{
+			while(1)
+			{
+				itA = sA.lower_bound(i);
+				if(itA == sA.end() || B[*itA] &gt; B[i]+D)
+					break;
+				dist[*itA] = dist[i] + 1;
+				que[len++] = *itA;
+				sA.erase(itA);
+			}
+		}
+		cur++;
+	}
+	for(int i=0;i&lt;N;i++)
+		cout &lt;&lt; dist[i] &lt;&lt; &apos;\n&apos;;
+}
+</pre>
+<p></body></html>
