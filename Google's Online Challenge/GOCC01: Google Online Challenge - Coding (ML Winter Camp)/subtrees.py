@@ -1,17 +1,19 @@
-from collections import defaultdict
-
 def make_tree():
-    return dict(left={}, right={}, value=-1)
+    default = dict(value=-1)
+    return dict(left=default, right=default, value=-1)
 
 
 def traverse(tree):
-    if tree['value'] == -1 or tree['left'] == {} or tree['right'] == {}:
+    if tree['value'] == -1:
         return 0
+    if tree['left']['value'] == -1 == tree['right']['value']:
+        return 1
 
     count = 0
     if (tree['value'] == tree['left']['value'] == tree['right']['value']
         and tree['left'] == tree['right']):
         count = 1
+
     return count + traverse(tree['left']) + traverse(tree['right'])
 
 
@@ -29,7 +31,6 @@ def main():
         nodes = list(map(int, input().split()))
         curr_level = []
         j = 0
-        print(last_level)
         for node in last_level:
             if node['value'] == -1:
                 continue
@@ -47,7 +48,6 @@ def main():
 
         last_level = curr_level
 
-    print(tree)
     print(traverse(tree))
 
 
