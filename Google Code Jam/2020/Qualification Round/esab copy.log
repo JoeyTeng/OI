@@ -1,0 +1,138 @@
+judge:   01110000100111110001
+  sol: 1-th read:
+  sol:   0-th bit: 0
+  sol: 1-th iteration:
+  sol:   0
+judge:   01110000100111110001
+  sol: 2-th read:
+  sol:   19-th bit: 1
+  sol: !reverse_indicator: 19
+  sol: 2-th iteration:
+  sol:   0                  1
+judge:   01110000100111110001
+  sol: 3-th read:
+  sol:   1-th bit: 1
+  sol: 3-th iteration:
+  sol:   01                 1
+judge:   01110000100111110001
+  sol: 4-th read:
+  sol:   18-th bit: 0
+  sol: 4-th iteration:
+  sol:   01                01
+judge:   01110000100111110001
+  sol: 5-th read:
+  sol:   2-th bit: 1
+  sol: 5-th iteration:
+  sol:   011               01
+judge:   01110000100111110001
+  sol: 6-th read:
+  sol:   17-th bit: 0
+  sol: 6-th iteration:
+  sol:   011              001
+judge:   01110000100111110001
+  sol: 7-th read:
+  sol:   3-th bit: 1
+  sol: 7-th iteration:
+  sol:   0111             001
+judge:   01110000100111110001
+  sol: 8-th read:
+  sol:   16-th bit: 0
+  sol: 8-th iteration:
+  sol:   0111            0001
+judge:   01110000100111110001
+  sol: 9-th read:
+  sol:   4-th bit: 0
+  sol: 9-th iteration:
+  sol:   01110           0001
+judge:   01110000100111110001
+  sol: 10-th read:
+  sol:   15-th bit: 1
+  sol: 10-th iteration:
+  sol:   01110          10001
+  sol: read test-bit for reverse
+judge:   01110000100111110001
+  sol: 11-th read:
+  sol:   19-th bit: 0
+  sol:   reversed
+judge: !Flipped
+  sol:   - 01110000000000010001
+  sol:   - 01110000000000010001
+  sol:   - 10001000000000001110
+  sol: 11-th iteration:
+  sol:   10001          01110
+judge:   10001111011000001110
+  sol: 12-th read:
+  sol:   5-th bit: 1
+  sol: 12-th iteration:
+  sol:   100011         01110
+judge:   10001111011000001110
+  sol: 13-th read:
+  sol:   14-th bit: 0
+  sol: 13-th iteration:
+  sol:   100011        001110
+judge:   10001111011000001110
+  sol: 14-th read:
+  sol:   6-th bit: 1
+  sol: 14-th iteration:
+  sol:   1000111       001110
+judge:   10001111011000001110
+  sol: 15-th read:
+  sol:   13-th bit: 0
+  sol: 15-th iteration:
+  sol:   1000111      0001110
+judge:   10001111011000001110
+  sol: 16-th read:
+  sol:   7-th bit: 1
+  sol: 16-th iteration:
+  sol:   10001111     0001110
+  sol: 17-th read:
+  sol:   12-th bit: 0
+  sol: 17-th iteration:
+  sol:   10001111    00001110
+judge:   10001111011000001110
+judge:   10001111011000001110
+  sol: 18-th read:
+  sol:   8-th bit: 0
+  sol: 18-th iteration:
+  sol:   100011110   00001110
+judge:   10001111011000001110
+  sol: 19-th read:
+  sol:   11-th bit: 0
+  sol: !complement_indicator: 11
+  sol: 19-th iteration:
+  sol:   100011110  000001110
+judge:   10001111011000001110
+  sol: 20-th read:
+  sol:   9-th bit: 1
+  sol: 20-th iteration:
+  sol:   1000111101 000001110
+  sol: read test-bit for flipping
+judge:   10001111011000001110
+  sol: 21-th read:
+  sol:   11-th bit: 1
+  sol:   flipped
+judge: !Reversed
+judge: !Flipped
+  sol: read test-bit for reverse
+judge:   10001111100100001110
+  sol: 22-th read:
+  sol:   19-th bit: 0
+  sol:   reversed
+  sol:   - 01110000101111110001
+  sol:   - 01110000101111110001
+  sol:   - 10001111110100001110
+  sol: 22-th iteration:
+  sol:   1000111111 100001110
+judge:   10001111100100001110
+  sol: 23-th read:
+  sol:   10-th bit: 0
+  sol: 23-th iteration:
+  sol:   10001111110100001110
+judge:  receive: 10001111110100001110
+judge:  answer:  10001111100100001110
+judge: !WRONG
+judge: Case #30 fails:
+judge: Wrong answer: contestant input 10001111110100001110, but answer is 10001111100100001110.
+
+Judge return code: 1
+Solution return code: 0
