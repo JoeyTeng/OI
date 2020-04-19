@@ -14,6 +14,16 @@ auto input() {
     return std::make_tuple(w, h, l, u, r, d);
 }
 
+double choose(int n, int k) {
+    double result = 1.0;
+    for (int i = k + 1; i <= n; ++i) {
+        result *= i;
+        result /= i - k;
+    }
+
+    return result;
+}
+
 template <typename T>
 auto process(T& args) {
     auto w = std::get<0>(args);
@@ -22,75 +32,37 @@ auto process(T& args) {
     auto u = std::get<3>(args) - 1;
     auto r = std::get<4>(args) - 1;
     auto d = std::get<5>(args) - 1;
-    std::string result;
-    // rolling rows
-    std::vector<std::vector<double>> prob;
+    double drop = 0.0;
 
-    std::vector<double> tmp(w);
-    prob.push_back(tmp);
-    prob.push_back(tmp);
-
-    // std::cerr << "start: (" << l << ", " << u << "), (" << r << ", " << d <<
-    // ")"
-    //           << std::endl;
-    prob[(0 & 1) ^ 1][0] = 2.0;  // a hack
-    for (auto i = 0; i < h - 1; ++i) {
-        auto& curr = prob[i & 1];
-        auto& prev = prob[(i & 1) ^ 1];
-
-        if (l <= 0 && 0 <= r && u <= i && i <= d) {
-            curr[0] = .0;
-        } else {
-            curr[0] = prev[0] / 2.0;
+    // std::cerr << "\nfall by row" << std::endl;
+    if (u > 0) {
+        for (int i = l; i <= r; ++i) {  // fall in by row
+            int options = std::min(std::min(i + u - 1, w), h);
+            // std::cerr << choose(options, u - 1) / std::pow(2.0, options) /
+            //                  (i == w || u == h ? 1.0 : 2.0)
+            //           << std::endl;
+            drop += choose(options, u - 1) / std::pow(2.0, options) /
+                    (i == w || u == h ? 1.0 : 2.0);
         }
-
-        // std::cerr << std::setprecision(6) << std::setw(9) << curr[0] << ' ';
-        for (auto j = 1; j < curr.size() - 1; ++j) {
-            if (l <= j && j <= r && u <= i && i <= d) {
-                curr[j] = 0.0;
-                // std::cerr << std::setprecision(6) << std::setw(9) << 0 << '
-                // ';
-                continue;
-            }
-            curr[j] = prev[j] / 2.0 + curr[j - 1] / 2.0;
-
-            // std::cerr << std::setprecision(6) << std::setw(9) << curr[j] << '
-            // ';
+    }
+    // std::cerr << "fall by col" << std::endl;
+    if (l > 0) {
+        for (int i = u; i <= d; ++i) {  // fall in by col
+            int options = std::min(std::min(i + l - 1, w), h);
+            // std::cerr << choose(options, l - 1) / std::pow(2.0, options) /
+            //                  (i == h || l == w ? 1.0 : 2.0)
+            //           << std::endl;
+            drop += choose(options, l) / std::pow(2.0, options) /
+                    (i == h || l == w ? 1.0 : 2.0);
         }
-        if (l <= w - 1 && w - 1 <= r && u <= i && i <= d) {
-            curr[w - 1] = 0;
-        } else {
-            curr[w - 1] = prev[w - 1] + curr[w - 2] / 2.0;
-        }
-        // std::cerr << std::setprecision(6) << std::setw(9) << curr[w - 1] << '
-        // '
-        //           << std::endl;
     }
 
-    auto& prev = prob[(h & 1)];
-    auto& curr = prob[(h & 1) ^ 1];
-
-    if (l <= 0 && 0 <= r && u <= h - 1 && h - 1 <= d) {
-        curr[0] = .0;
-    } else {
-        curr[0] = prev[0] / (h >= 2 ? 2.0 : 1.0);
+    // no safe route
+    if ((l == 0 && r == w - 1) || (u == 0 && d == h - 1)) {
+        return 0.0;
     }
-    // std::cerr << std::setprecision(6) << std::setw(9) << curr[0] << ' ';
-    for (auto j = 1; j < w - 1; ++j) {
-        if (u <= h - 1 && h - 1 <= d && l <= j && j <= r) {
-            curr[j] = 0.0;
-            // std::cerr << std::setprecision(6) << std::setw(9) << 0 << ' ';
-            continue;
-        }
 
-        curr[j] = prev[j] / 2.0 + curr[j - 1];
-        // std::cerr << std::setprecision(6) << std::setw(9) << curr[j] << ' ';
-    }
-    curr[w - 1] = prev[w - 1] + (w >= 2 ? curr[w - 2] : .0);
-    // std::cerr << std::setprecision(6) << std::setw(9) << curr[w - 1] << ' '
-    //           << std::endl;
-
-    return floor(curr[w - 1] * 1e8) / 1e8;
+    return floor((1.0 - drop) * 1e8) / 1e8;
 }
 
 int main() {
