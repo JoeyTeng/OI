@@ -33,6 +33,41 @@ void print_deck(const T& deck) {
 }
 
 template <typename T>
+bool check(const T& deck, int R, int S) {
+    for (int i = 0; i < R; ++i) {
+        for (int j = 0; j < S; ++j) {
+            if (deck[i * S + j] != i) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+template <typename T, typename P>
+bool dfs(T& deck, P& result, int R, int S, int depth, int max_depth) {
+    if (depth == max_depth) {
+        return false;
+    }
+    if (check(deck, R, S)) {
+        return true;
+    }
+
+    for (int i = 1; i < R * S - depth; ++i) {
+        for (int j = 1; j + i < R * S - depth; ++j) {
+            result.push_back(std::make_pair(i, j));
+            swap_deck(deck, i, j);
+            if (dfs(deck, result, R, S, depth + 1, max_depth)) {
+                return true;
+            }
+            swap_deck(deck, j, i);
+            result.pop_back();
+        }
+    }
+    return false;
+}
+
+template <typename T>
 auto process(T& tuple) {
     auto R = std::get<0>(tuple);
     auto S = std::get<1>(tuple);
@@ -45,35 +80,12 @@ auto process(T& tuple) {
         }
     }
 
-    int right_index = deck.size() - 1;
-
-    for (; right_index >= 0;) {
-        // std::cerr << right_index << std::endl;
-        // print_deck(deck);
-        auto right = deck[right_index];
-        bool flag = false;
-
-        for (; right_index >= 0 && deck[right_index] == right; --right_index)
-            ;
-        right_index++;
-
-        for (int i = right_index - 2; i >= 0; --i) {
-            if (deck[i] == right) {
-                swap_deck(deck, i + 1, right_index - i - 1);
-                result.push_back(std::make_pair(i + 1, right_index - i - 1));
-                flag = true;
-                // std::cerr << "(" << i + 1 << ", " << right_index - i - 1
-                //           << ")\n";
-                break;
-            }
-        }
-        for (; right_index >= 0 && deck[right_index] == right; --right_index)
-            ;
-        if (flag) {
-            ++right_index;
+    for (int i = 1; i < std::max(R, S) + 2; ++i) {
+        if (dfs(deck, result, R, S, 0, i)) {
+            return result;
         }
     }
-    return result;
+    exit(-1);
 }
 
 template <typename T>
